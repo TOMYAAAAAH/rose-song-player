@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+@theme {
+    --font-telma: "Telma", ui-sans-serif, system-ui, sans-serif;
+}
+
+@font-face {
+    font-family: 'Telma';
+    src: url('/Telma-Variable.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
