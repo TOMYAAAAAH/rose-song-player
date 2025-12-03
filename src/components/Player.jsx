@@ -2,7 +2,8 @@ import {useRef, useContext, useState, useEffect} from "react";
 import {SongContext} from "../contexts/songContext.jsx";
 import {albums} from "../data/albums.js";
 import {tracks} from "../data/tracks.js";
-import {PlayIcon, PauseIcon} from "@heroicons/react/24/solid";
+import {PlayIcon, PauseIcon, SpeakerXMarkIcon, SpeakerWaveIcon } from "@heroicons/react/24/solid";
+
 
 export default function Player() {
     const {songTitle} = useContext(SongContext);
@@ -140,6 +141,9 @@ export default function Player() {
             >
                 {isMuted ? "🔇" : "🔊"}
             </button>
+            <SpeakerXMarkIcon className="w-8 h-8"/>
+            <SpeakerWaveIcon className="w-8 h-8"/>
+
 
             <input
                 type="range"
