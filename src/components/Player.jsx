@@ -7,12 +7,15 @@ import {tracks} from "../data/tracks.js";
 export default function Player() {
     const [playing, setPlaying] = useState(false);
     const { songTitle } = useContext(SongContext);
+    let currentTrack;
+    let currentAlbum;
+    let imgUrl;
 
-    if (!songTitle) {
-
+    if (songTitle) {
+        currentTrack = tracks.find((track) => track.title === songTitle) || {title: '', album: ''};
+        currentAlbum = albums.find((album) => album.name === currentTrack.album) || null;
+        imgUrl = new URL(`../assets/covers/${currentAlbum.img}`, import.meta.url).href;
     }
-    const currentTrack = tracks.find((track) => track.title === songTitle) || {title: '', album: ''};
-    const currentAlbum = albums.find((album) => album.name === currentTrack.album) || null;
 
 
     function togglePlay() {
@@ -23,10 +26,10 @@ export default function Player() {
         <div className="bg-gray-300 sticky p-5 bottom-0">
 
             <div className="flex items-center gap-4">
-            <img src={imgUrl} alt={currentTrack.title} className="rounded-md w-16"/>
+            {/*<img src={imgUrl} alt={currentTrack.title} className="rounded-md w-16"/>*/}
                 <div className="flex flex-col">
-                    <p>{currentTrack.title}</p>
-                    <p>{currentAlbum.name}</p>
+                    {/*<p>{currentTrack.title}</p>*/}
+                    {/*<p>{currentAlbum.name}</p>*/}
                 </div>
             </div>
 
