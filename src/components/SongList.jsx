@@ -1,7 +1,8 @@
 import Song from "./Song.jsx";
 import {albums} from "../data/albums.js";
 import {tracks} from "../data/tracks.js";
-import {useState} from "react";
+import {useContext, useState} from "react";
+import {SongContext} from "../contexts/songContext.jsx";
 
 export default function SongList() {
     const [sortBy, setSortBy] = useState('popularity asc');
@@ -20,6 +21,14 @@ export default function SongList() {
 
         return sortBy.includes('asc') ? compareValue : -compareValue; //pick sort order
     });
+
+    const { setSongTitle } = useContext(SongContext);
+
+    const shuffle = () => {
+        const randomIndex = Math.floor(Math.random() * sortedTracks.length);
+        const randomTrack = sortedTracks[randomIndex];
+        setSongTitle(randomTrack.title);
+    }
     
     return (
         <>
@@ -28,10 +37,13 @@ export default function SongList() {
 
 
                 <div className="flex items-center gap-4">
+                    <button onClick={shuffle} className="bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-4 rounded-lg">
+                        Shuffle
+                    </button>
                     <input
                         onChange={(e) => setSearch(e.target.value)}
                         type="text"
-                        placeholder="rechercher"
+                        placeholder="Rechercher"
                         className="appearance-none bg-pink-50 border-2 border-pink-300 text-pink-900 py-3 px-4 rounded-lg font-medium placeholder-pink-300 hover:border-pink-400 hover:bg-pink-100 focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-transparent transition duration-150"
                     />
                     <div className="relative">
