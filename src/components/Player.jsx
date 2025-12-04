@@ -135,7 +135,7 @@ export default function Player() {
                     value={currentTime}
                     onChange={changeTime}
                     step="1"
-                    className="w-[20vw] appearance-none h-2 hover:h-4 transition-all h-2 rounded-lg cursor-pointer outline-none transition focus-visible:ring-2 focus-visible:ring-gray-400"
+                    className="w-[20vw] appearance-none hover:h-4 transition-all h-2 rounded-lg cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-gray-400"
                     style={{
                         accentColor: "none",
                         background: `linear-gradient(to right, ${sliderColors[0]} ${(currentTime / duration) * 100}%, ${sliderColors[1]} ${(currentTime / duration) * 100}%)`
