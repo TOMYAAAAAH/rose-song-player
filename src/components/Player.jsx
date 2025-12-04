@@ -132,7 +132,12 @@ export default function Player() {
                     value={currentTime}
                     onChange={changeTime}
                     step="1"
-                    className="w-96 accent-pink-500"
+                    className="w-96 appearance-none bg-gray-200 h-2 rounded-lg cursor-pointer outline-none transition focus-visible:ring-2 focus-visible:ring-gray-400"
+                    style={{
+                        accentColor: "transparent",
+                        background: `linear-gradient(to right, #ec4899 ${(currentTime / duration) * 100}%, #e5e7eb ${(currentTime / duration) * 100}%)`
+                    }}
+
                 />
 
                 <span className="w-16 text-sm">
@@ -146,6 +151,7 @@ export default function Player() {
             {isMuted ? (<SpeakerXMarkIcon onClick={toggleMute} className="w-6 h-6"/>) : (
                 <SpeakerWaveIcon onClick={toggleMute} className="w-6 h-6"/>)}
 
+            {/* Volume Input (Seek Bar) */}
             <input
                 type="range"
                 min="0"
@@ -153,7 +159,11 @@ export default function Player() {
                 step="0.05"
                 value={isMuted ? 0 : volume}
                 onChange={changeVolume}
-                className="w-32 accent-pink-500"
+                className="w-32 appearance-none bg-gray-200 h-2 rounded-lg cursor-pointer outline-none transition focus-visible:ring-2 focus-visible:ring-gray-400"
+                style={{
+                    accentColor: "transparent"
+                }}
+
             />
         </div>
 

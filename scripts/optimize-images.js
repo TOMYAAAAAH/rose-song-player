@@ -27,7 +27,7 @@ async function optimize() {
 
     await sharp(inputPath)
       .resize(512)
-      .webp({ quality: 50 })
+      .webp({ quality: 100 })
       .toFile(outputPath);
   }
 
