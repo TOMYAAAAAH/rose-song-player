@@ -1,81 +1,79 @@
-import { useRef, useContext, useState, useEffect } from "react";
-import { SongContext } from "../contexts/songContext.jsx";
-import { albums } from "../data/albums.js";
-import { tracks } from "../data/tracks.js";
-import {
-  PlayIcon,
-  PauseIcon,
-  SpeakerXMarkIcon,
-  SpeakerWaveIcon,
-} from "@heroicons/react/24/solid";
+import {useRef, useContext, useState, useEffect} from "react";
+import {SongContext} from "../contexts/songContext.jsx";
+import {albums} from "../data/albums.js";
+import {tracks} from "../data/tracks.js";
+import {PlayIcon, PauseIcon, SpeakerXMarkIcon, SpeakerWaveIcon} from "@heroicons/react/24/solid";
+
 
 export default function Player() {
-  const { songTitle } = useContext(SongContext);
-  let currentTrack;
-  let currentAlbum;
-  let imgUrl;
-  let audioUrl;
+    const {songTitle} = useContext(SongContext);
+    let currentTrack;
+    let currentAlbum;
+    let imgUrl;
+    let audioUrl;
 
-  // Update current track, album, and file URLs based on the selected song
-  if (songTitle) {
-    currentTrack = tracks.find((track) => track.title === songTitle) || {
-      title: "",
-      album: "",
-    };
-    currentAlbum =
-      albums.find((album) => album.name === currentTrack.album) || null;
-    imgUrl = new URL(`../assets/covers/${currentAlbum.img}`, import.meta.url)
-      .href;
-    audioUrl = new URL(
-      `../assets/audios/${currentTrack.audio}`,
-      import.meta.url
-    ).href;
-  }
-
-  // References and player state management
-  const audioRef = useRef();
-  const [isPlaying, setIsPlaying] = useState(false); // Track if audio is playing
-  const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(0);
-  const [volume, setVolume] = useState(0.5);
-  const [isMuted, setIsMuted] = useState(false);
-
-  // Play and Pause functions
-  const play = () => {
-    audioRef.current.play();
-    setIsPlaying(true); // Update state to playing
-  };
-  const pause = () => {
-    audioRef.current.pause();
-    setIsPlaying(false); // Update state to paused
-  };
-
-  // Handle song changes
-  useEffect(() => {
-    // If a new song is loaded, play it automatically
-    if (songTitle && audioRef.current) {
-      audioRef.current.load();
-      audioRef.current.play();
+    // Update current track, album, and file URLs based on the selected song
+    if (songTitle) {
+        currentTrack = tracks.find((track) => track.title === songTitle) || {title: "", album: ""};
+        currentAlbum = albums.find((album) => album.name === currentTrack.album) || null;
+        imgUrl = new URL(`../assets/covers/${currentAlbum.img}`, import.meta.url).href;
+        audioUrl = new URL(`../assets/audios/${currentTrack.audio}`, import.meta.url).href;
     }
-  }, [songTitle]); // Dependency array ensures this runs when songTitle changes
 
-  // apply changes from the audio tag to the state
-  const handleAudioPlay = () => setIsPlaying(true);
-  const handleAudioPause = () => setIsPlaying(false);
+    // References and player state management
+    const audioRef = useRef();
+    const [isPlaying, setIsPlaying] = useState(false); // Track if audio is playing
+    const [currentTime, setCurrentTime] = useState(0);
+    const [duration, setDuration] = useState(0);
+    const [volume, setVolume] = useState(0.5);
+    const [isMuted, setIsMuted] = useState(false);
 
-  function updateTime() {
-    setCurrentTime(audioRef.current.currentTime || 0);
-    setDuration(audioRef.current.duration || 0);
-  }
+    // Play and Pause functions
+    const play = () => {
+        audioRef.current.play();
+        setIsPlaying(true); // Update state to playing
+    };
+    const pause = () => {
+        audioRef.current.pause();
+        setIsPlaying(false); // Update state to paused
+    };
 
-  useEffect(() => {
-    const audio = audioRef.current;
 
-    updateTime();
-    audio.addEventListener("timeupdate", updateTime);
+    // Handle song changes
+    useEffect(() => {
+        // If a new song is loaded, play it automatically
+        if (songTitle && audioRef.current) {
+            audioRef.current.load();
+            audioRef.current.play();
+            updateTime()
+        }
+    }, [songTitle]); // Dependency array ensures this runs when songTitle changes
 
-    return () => {
-      audio.removeEventListener("timeupdate", updateTime);
+    // apply changes from the audio tag to the state
+    const handleAudioPlay = () => setIsPlaying(true);
+    const handleAudioPause = () => setIsPlaying(false);
+
+    function updateTime() {
+        setCurrentTime(audioRef.current.currentTime);
+        setDuration(audioRef.current.duration || 0);
+    }
+
+    useEffect(() => {
+        const audio = audioRef.current;
+
+        updateTime()
+        audio.addEventListener("timeupdate", updateTime);
+
+        return () => {
+            audio.removeEventListener("timeupdate", updateTime);
+        };
+
+    }, []);
+
+    const changeTime = (e) => {
+        const time = e.target.value;
+        audioRef.current.currentTime = time;
+        setCurrentTime(time);
     };
 
     const formatTime = (t) => {
@@ -114,7 +112,6 @@ export default function Player() {
                 <p className="">{currentAlbum ? currentAlbum?.name : "-"}</p>
             </div>
         </div>
-      </div>
 
         {/* ----------- PLAY PAUSE AND TIME CONTROLS ----------- */}
         <div className="flex flex-col items-center gap-2 grow">
@@ -167,14 +164,5 @@ export default function Player() {
             onPlay={handleAudioPlay}
             onPause={handleAudioPause}
         />
-      </div>
-
-      <audio
-        ref={audioRef}
-        src={audioUrl}
-        onPlay={handleAudioPlay}
-        onPause={handleAudioPause}
-      />
-    </div>
-  );
+    </div>);
 }
