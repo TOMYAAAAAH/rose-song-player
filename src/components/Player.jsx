@@ -2,7 +2,7 @@ import {useRef, useContext, useState, useEffect} from "react";
 import {SongContext} from "../contexts/songContext.jsx";
 import {albums} from "../data/albums.js";
 import {tracks} from "../data/tracks.js";
-import {PlayIcon, PauseIcon, SpeakerXMarkIcon, SpeakerWaveIcon } from "@heroicons/react/24/solid";
+import {PlayIcon, PauseIcon, SpeakerXMarkIcon, SpeakerWaveIcon} from "@heroicons/react/24/solid";
 
 
 export default function Player() {
@@ -102,27 +102,25 @@ export default function Player() {
         }
     };
 
-    return (
-        <div className="bg-gray-300 sticky p-5 bottom-0 flex items-center justify-between">
+    return (<div className="bg-gray-300 sticky p-5 bottom-0 flex items-center justify-between">
 
 
-            <div className="flex items-center gap-4 w-96">
-                <img src={imgUrl} alt={currentTrack ? currentTrack.title : ""} className="rounded-md w-16"/>
-                <div className="flex flex-col">
-                    <p className="text-xl font-bold">{currentTrack ? currentTrack.title : "-"}</p>
-                    <p className="">{currentAlbum ? currentAlbum?.name : "-"}</p>
-                </div>
+        <div className="flex items-center gap-4 w-96">
+            <img src={imgUrl} alt={currentTrack ? currentTrack.title : ""} className="rounded-md w-16"/>
+            <div className="flex flex-col">
+                <p className="text-xl font-bold">{currentTrack ? currentTrack.title : "-"}</p>
+                <p className="">{currentAlbum ? currentAlbum?.name : "-"}</p>
             </div>
+        </div>
 
 
-            {isPlaying ? (
-                <PauseIcon onClick={pause} className="w-12 h-12 text-black cursor-pointer"/>
-            ) : (
-                <PlayIcon onClick={play} className="w-12 h-12 text-black cursor-pointer"/>
-            )}
+        {isPlaying ? (<PauseIcon onClick={pause} className="w-12 h-12 text-black cursor-pointer"/>) : (
+            <PlayIcon onClick={play} className="w-12 h-12 text-black cursor-pointer"/>)}
 
-            <span className="w-24 text-right text-sm">
-          {formatTime(currentTime)} / {formatTime(duration)}
+
+        <div className="flex items-center gap-4">
+        <span className="w-16 text-right text-sm">
+          {formatTime(currentTime)}
         </span>
 
             <input
@@ -134,33 +132,32 @@ export default function Player() {
                 step="1"
                 className="w-64 accent-pink-500"
             />
-
-            <button
-                onClick={toggleMute}
-                className="bg-white border-pink-500 border-2 text-white px-3 py-2 rounded-md"
-            >
-                {isMuted ? "🔇" : "🔊"}
-            </button>
-            <SpeakerXMarkIcon className="w-8 h-8"/>
-            <SpeakerWaveIcon className="w-8 h-8"/>
-
-
-            <input
-                type="range"
-                min="0"
-                max="1"
-                step="0.05"
-                value={isMuted ? 0 : volume}
-                onChange={changeVolume}
-                className="w-32 accent-pink-500"
-            />
-
-            <audio
-                ref={audioRef}
-                src={audioUrl}
-                onPlay={handleAudioPlay}
-                onPause={handleAudioPause}
-            />
+            <span className="w-16 text-sm">
+         {formatTime(duration)}
+        </span>
         </div>
-    );
+
+
+        <div className="flex items-center gap-4">
+        {isMuted ? (<SpeakerXMarkIcon onClick={toggleMute} className="w-6 h-6"/>) : (
+            <SpeakerWaveIcon onClick={toggleMute} className="w-6 h-6"/>)}
+
+        <input
+            type="range"
+            min="0"
+            max="1"
+            step="0.05"
+            value={isMuted ? 0 : volume}
+            onChange={changeVolume}
+            className="w-32 accent-pink-500"
+        />
+        </div>
+
+        <audio
+            ref={audioRef}
+            src={audioUrl}
+            onPlay={handleAudioPlay}
+            onPause={handleAudioPause}
+        />
+    </div>);
 }
