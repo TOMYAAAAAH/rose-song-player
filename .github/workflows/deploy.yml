@@ -1,4 +1,4 @@
-name: Deploy to O2switch
+name: Deploy to O2switch rose.tomalmarcha.fr
 
 on:
   push:
@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -38,3 +40,4 @@ jobs:
           local-dir: ./deploy/
           server-dir: /
           dangerous-clean-slate: false
+          cache-control: true
