@@ -15,12 +15,12 @@ export function useHistory() {
   useEffect(() => {
     if (songTitle) {
       setHistory((prevHistory) => {
-        let lastSong = prevHistory[0];
-        if (updatedHistory.length > 14) {
-          updatedHistory = updatedHistory.slice(0, 14);
-        }
+        const lastSong = prevHistory[0];
         if (lastSong !== songTitle) {
-          const updatedHistory = [songTitle, ...prevHistory];
+          let updatedHistory = [songTitle, ...prevHistory];
+          if (updatedHistory.length > 29) {
+            updatedHistory = updatedHistory.slice(0, 29);
+          }
           localStorage.setItem("songHistory", JSON.stringify(updatedHistory));
           return updatedHistory;
         }
