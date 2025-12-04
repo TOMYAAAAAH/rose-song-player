@@ -17,14 +17,10 @@ export function useHistory() {
       setHistory((prevHistory) => {
         const lastSong = prevHistory[0];
         if (lastSong !== songTitle) {
-          let updatedHistory = [songTitle, ...prevHistory];
-          if (updatedHistory.length > 14) {
-            updatedHistory = updatedHistory.slice(0, 14);
-          }
+          const updatedHistory = [songTitle, ...prevHistory];
           localStorage.setItem("songHistory", JSON.stringify(updatedHistory));
           return updatedHistory;
         }
-        return prevHistory;
       });
     }
   }, [songTitle]);
