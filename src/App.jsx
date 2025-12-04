@@ -4,7 +4,7 @@ import {SongProvider} from "./contexts/songContext.jsx";
 
 export default function App() {
     return (
-        <div className="bg-[#dde1dc]">
+        <div>
             <SongProvider>
                 <Page/>
             </SongProvider>

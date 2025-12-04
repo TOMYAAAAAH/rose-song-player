@@ -23,9 +23,10 @@ export function useHistory() {
           }
           localStorage.setItem("songHistory", JSON.stringify(updatedHistory));
           return updatedHistory;
-        }
+        }return prevHistory
       });
     }
+
   }, [songTitle]);
 
   function clearHistory() {
