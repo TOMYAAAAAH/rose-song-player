@@ -1,5 +1,5 @@
 import {useState, useEffect, useContext} from "react";
-import {SongContext} from "../contexts/SongContext";
+import {SongContext} from "../contexts/songContext.jsx";
 
 export function useHistory() {
     const {songTitle} = useContext(SongContext);
