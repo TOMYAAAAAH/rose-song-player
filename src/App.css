@@ -11,3 +11,31 @@
     font-style: normal;
 }
 
+body {
+    background: #dde1dc;
+    background: linear-gradient(10deg, #faeeef, #dde1dc);
+}
+
+/* ===== Hide range input thumb (all <input type="range"> globally) ===== */
+
+/* Chrome / Edge / Safari */
+input[type="range"]::-webkit-slider-thumb {
+    appearance: none;
+    width: 0;
+    height: 0;
+    background: transparent;
+    border: none;
+}
+
+/* Firefox */
+input[type="range"]::-moz-range-thumb {
+    width: 0;
+    height: 0;
+    background: transparent;
+    border: none;
+}
+
+/* Hide focus outline in Firefox */
+input[type="range"]::-moz-focus-outer {
+    border: 0;
+}

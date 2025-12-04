@@ -41,7 +41,7 @@ export default function SongList() {
                 {/* Shuffle Button */}
                 <button
                     onClick={shuffle}
-                    className="w-10 h-10 flex justify-center items-center bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-md border border-gray-300 transition-transform transform hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-400"
+                    className="w-10 h-10 flex justify-center items-center bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-md border border-gray-300 transition-transform transform focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 active:ring-2 active:ring-gray-400"
                 >
                     <img
                         src={new URL(`../assets/shuffle.svg`, import.meta.url).href}
@@ -104,7 +104,7 @@ export default function SongList() {
         </div>
 
 
-      <div className="grid grid-cols-4 gap-5">
+      <div className="grid grid-cols-4 gap-6">
         {sortedTracks
           .filter(
             (track) =>
