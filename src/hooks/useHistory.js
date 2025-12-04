@@ -28,5 +28,10 @@ export function useHistory() {
     }
   }, [songTitle]);
 
-  return history;
+  function clearHistory() {
+    localStorage.removeItem("songHistory");
+    setHistory([]); // <-- met à jour ton state
+  }
+
+  return { history, clearHistory };
 }
