@@ -16,7 +16,7 @@ export default function Player() {
     if (songTitle) {
         currentTrack = tracks.find((track) => track.title === songTitle) || {title: "", album: ""};
         currentAlbum = albums.find((album) => album.name === currentTrack.album) || null;
-        imgUrl = `/covers/${currentAlbum.img}`;
+        imgUrl = `/covers/${currentAlbum.img}.webp`;
         audioUrl = new URL(`../assets/audios/${currentTrack.audio}`, import.meta.url).href;
     }
 
