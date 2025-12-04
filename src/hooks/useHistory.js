@@ -20,6 +20,8 @@ export function useHistory() {
           const updatedHistory = [songTitle, ...prevHistory];
           localStorage.setItem("songHistory", JSON.stringify(updatedHistory));
           return updatedHistory;
+        } else {
+          return prevHistory;
         }
       });
     }
