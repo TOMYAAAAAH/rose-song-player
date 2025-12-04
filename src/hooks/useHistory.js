@@ -30,7 +30,7 @@ export function useHistory() {
 
   function clearHistory() {
     localStorage.removeItem("songHistory");
-    setHistory([]); // <-- met à jour ton state
+    setHistory([]);
   }
 
   return { history, clearHistory };

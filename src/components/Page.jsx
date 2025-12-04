@@ -1,7 +1,7 @@
 import Hero from "./Hero.jsx";
 import SongList from "./SongList.jsx";
-import Aside from "./Aside.jsx";
 import Player from "./Player.jsx";
+import History from "./History.jsx";
 
 export default function Page() {
 
@@ -9,7 +9,7 @@ export default function Page() {
         <>
             <div className="flex">
 
-                <Aside/>
+                <History/>
 
                 <main className="max-w-6xl mx-auto px-8 py-12 flex-1">
                     <Hero/>
