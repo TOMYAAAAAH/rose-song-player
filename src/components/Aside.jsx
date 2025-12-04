@@ -5,18 +5,14 @@ import HistoryComponent from "../components/HistoryComponent";
 import { TrashIcon } from "@heroicons/react/24/solid";
 
 export default function Aside() {
-  const history = useHistory();
+  const { history, clearHistory } = useHistory();
   console.log(history);
-  const relatedAlbum = albums.find((album) => album.name === tracks.album);
 
   return (
     <div className="bg-gray-300 w-64 p-5 top-0 transition gap-3 flex flex-col overflow-y-hidden">
-      <div>
+      <div className="flex gap-10">
         <p>Historique</p>
-        <TrashIcon
-          onClick={play}
-          className="w-12 h-12 text-black cursor-pointer"
-        />
+        <TrashIcon className="w-7 h-7" onClick={clearHistory} />
       </div>
       {history.map((songTitle, index) => {
         const relatedTrack = tracks.find((track) => songTitle === track.title);
