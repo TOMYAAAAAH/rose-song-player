@@ -104,8 +104,8 @@ export default function Player() {
 
     return (<div className="bg-gray-300 sticky p-5 bottom-0 flex items-center justify-between">
 
-
-        <div className="flex items-center gap-4 w-96">
+        {/* ----------- CURRENT SONG DISPLAY ----------- */}
+        <div className="flex items-center gap-4 grow">
             <img src={imgUrl} alt={currentTrack ? currentTrack.title : ""} className="rounded-md w-16"/>
             <div className="flex flex-col">
                 <p className="text-xl font-bold">{currentTrack ? currentTrack.title : "-"}</p>
@@ -113,46 +113,51 @@ export default function Player() {
             </div>
         </div>
 
+        {/* ----------- PLAY PAUSE AND TIME CONTROLS ----------- */}
+        <div className="flex flex-col items-center gap-2 grow">
+            {isPlaying ? (<PauseIcon onClick={pause} className="w-12 h-12 text-black cursor-pointer"/>) : (
+                <PlayIcon onClick={play} className="w-12 h-12 text-black cursor-pointer"/>)}
 
-        {isPlaying ? (<PauseIcon onClick={pause} className="w-12 h-12 text-black cursor-pointer"/>) : (
-            <PlayIcon onClick={play} className="w-12 h-12 text-black cursor-pointer"/>)}
 
+            <div className="flex items-center gap-4">
 
-        <div className="flex items-center gap-4">
-        <span className="w-16 text-right text-sm">
-          {formatTime(currentTime)}
-        </span>
+            <span className="w-16 text-right text-sm">
+              {formatTime(currentTime)}
+            </span>
+
+                <input
+                    type="range"
+                    min="0"
+                    max={duration}
+                    value={currentTime}
+                    onChange={changeTime}
+                    step="1"
+                    className="w-96 accent-pink-500"
+                />
+
+                <span className="w-16 text-sm">
+         {formatTime(duration)}
+            </span>
+            </div>
+        </div>
+
+        {/* ----------- VOLUME CONTROLS ----------- */}
+        <div className="flex items-center gap-4 grow justify-end">
+            {isMuted ? (<SpeakerXMarkIcon onClick={toggleMute} className="w-6 h-6"/>) : (
+                <SpeakerWaveIcon onClick={toggleMute} className="w-6 h-6"/>)}
 
             <input
                 type="range"
                 min="0"
-                max={duration}
-                value={currentTime}
-                onChange={changeTime}
-                step="1"
-                className="w-64 accent-pink-500"
+                max="1"
+                step="0.05"
+                value={isMuted ? 0 : volume}
+                onChange={changeVolume}
+                className="w-32 accent-pink-500"
             />
-            <span className="w-16 text-sm">
-         {formatTime(duration)}
-        </span>
         </div>
 
-
-        <div className="flex items-center gap-4">
-        {isMuted ? (<SpeakerXMarkIcon onClick={toggleMute} className="w-6 h-6"/>) : (
-            <SpeakerWaveIcon onClick={toggleMute} className="w-6 h-6"/>)}
-
-        <input
-            type="range"
-            min="0"
-            max="1"
-            step="0.05"
-            value={isMuted ? 0 : volume}
-            onChange={changeVolume}
-            className="w-32 accent-pink-500"
-        />
-        </div>
-
+        {/* ----------- AUDIO TAG (NOT DISPLAYED) ----------- */}
         <audio
             ref={audioRef}
             src={audioUrl}
