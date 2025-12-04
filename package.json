@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "optimize-images": "node scripts/optimize-images.js",
+    "build": "npm run optimize-images && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
@@ -14,6 +15,7 @@
     "@tailwindcss/vite": "^4.1.17",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "sharp": "^0.34.5",
     "tailwind": "^2.3.1"
   },
   "devDependencies": {
@@ -28,6 +30,7 @@
     "globals": "^16.5.0",
     "postcss": "^8.5.6",
     "tailwindcss": "^4.1.17",
-    "vite": "^7.2.4"
+    "vite": "^7.2.4",
+    "vite-plugin-image-optimizer": "^2.0.3"
   }
 }

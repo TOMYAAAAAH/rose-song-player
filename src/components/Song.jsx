@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { SongContext } from "../contexts/songContext";
 
 export default function Song({ img, title, date, album }) {
-  const imgUrl = new URL(`../assets/covers/${img}`, import.meta.url).href;
+  const imgUrl = `/covers/${img}.webp`;
   const { setSongTitle } = useContext(SongContext);
 
   return (
