@@ -9,7 +9,7 @@ export default function Aside() {
   const relatedAlbum = albums.find((album) => album.name === tracks.album);
 
   return (
-    <div className="bg-gray-300 w-30 h-screen p-5 top-0 transition">
+    <div className="bg-gray-300 w-64 p-5 top-0 transition gap-3 flex flex-col overflow-y-hidden">
       Historique
       {history.map((songTitle, index) => {
         const relatedTrack = tracks.find((track) => songTitle === track.title);
