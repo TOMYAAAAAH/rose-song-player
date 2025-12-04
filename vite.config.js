@@ -2,11 +2,6 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from "@tailwindcss/vite";
 
-export default defineConfig({
-  plugins: [react(), tailwindcss()],
-})
-
-
 import sharp from 'sharp';
 import fs from 'fs';
 import path from 'path';
@@ -27,3 +22,7 @@ fs.readdirSync(inputDir).forEach(async file => {
 
     console.log(`Optimized: ${file}`);
 });
+
+export default defineConfig({
+    plugins: [react(), tailwindcss()],
+})
