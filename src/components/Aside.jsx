@@ -2,6 +2,7 @@ import { useHistory } from "../hooks/useHistory";
 import { albums } from "../data/albums";
 import { tracks } from "../data/tracks";
 import HistoryComponent from "../components/HistoryComponent";
+import { TrashIcon } from "@heroicons/react/24/solid";
 
 export default function Aside() {
   const history = useHistory();
@@ -10,7 +11,13 @@ export default function Aside() {
 
   return (
     <div className="bg-gray-300 w-64 p-5 top-0 transition gap-3 flex flex-col overflow-y-hidden">
-      Historique
+      <div>
+        <p>Historique</p>
+        <TrashIcon
+          onClick={play}
+          className="w-12 h-12 text-black cursor-pointer"
+        />
+      </div>
       {history.map((songTitle, index) => {
         const relatedTrack = tracks.find((track) => songTitle === track.title);
         const relatedAlbum = albums.find(
