@@ -17,7 +17,7 @@ export function useHistory() {
       setHistory((prevHistory) => {
         const lastSong = prevHistory.at(-1);
         if (lastSong !== songTitle) {
-          const updatedHistory = [...prevHistory, songTitle];
+          const updatedHistory = [songTitle, ...prevHistory];
           localStorage.setItem("songHistory", JSON.stringify(updatedHistory));
           return updatedHistory;
         }
