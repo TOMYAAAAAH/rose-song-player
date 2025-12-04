@@ -1,7 +1,5 @@
-import { useContext } from "react";
-
 export default function HistoryComponent({ img, title, album }) {
-  const imgUrl = new URL(`../assets/covers/${img}`, import.meta.url).href;
+    const imgUrl = `/covers/${img}.webp`;
 
   return (
     <div className="flex items-center gap-4">
