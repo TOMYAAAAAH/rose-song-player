@@ -4,6 +4,7 @@ import {albums} from "../data/albums.js";
 import {tracks} from "../data/tracks.js";
 import PlayerControl from "./PlayerControl.jsx";
 import PlayerVolume from "./PlayerVolume.jsx";
+import PlayerCurrentSong from "./PlayerCurrentSong.jsx";
 
 
 export default function Player() {
@@ -92,15 +93,7 @@ export default function Player() {
     return (<div className="bg-white/50 backdrop-blur-2xl sticky p-5 bottom-0 flex items-center justify-between">
 
         {/* ----------- CURRENT SONG DISPLAY ----------- */}
-        <div className="flex items-center gap-4 grow w-[6vw] ">
-
-            <img src={imgUrl} alt={currentTrack ? currentTrack.title : ""} className="rounded-md w-16"/>
-            <div className="flex flex-col">
-                <p className="text-xl font-bold">{currentTrack ? currentTrack.title : ""}</p>
-                <p>{currentAlbum ? currentAlbum?.name : ""}</p>
-            </div>
-        </div>
-
+        <PlayerCurrentSong imgUrl={imgUrl} currentTrack={currentTrack} currentAlbum={currentAlbum} />
         {/* ----------- PLAY PAUSE AND TIME CONTROLS ----------- */}
         <PlayerControl audioRef={audioRef} setIsPlaying={setIsPlaying} isPlaying={isPlaying} songTitle={songTitle} duration={duration} currentTime={currentTime} changeTime={changeTime} />
 
