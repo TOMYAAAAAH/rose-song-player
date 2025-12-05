@@ -45,25 +45,25 @@ export default function SongFilters({sortedTracks, setSortBy, setSearch}) {
                         value="popularity asc"
                         className="hover:bg-gray-200 text-gray-800"
                     >
-                        Popularity ↑
+                        Popularité ↑
                     </option>
                     <option
                         value="popularity desc"
                         className="hover:bg-gray-200 text-gray-800"
                     >
-                        Popularity ↓
+                        Popularité ↓
                     </option>
                     <option
                         value="date asc"
                         className="hover:bg-gray-200 text-gray-800"
                     >
-                        Release Date ↑
+                        Date de sortie ↑
                     </option>
                     <option
                         value="date desc"
                         className="hover:bg-gray-200 text-gray-800"
                     >
-                        Release Date ↓
+                        Date de sortie ↓
                     </option>
                 </select>
                 <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-500">

@@ -8,6 +8,9 @@ export default function SongList() {
     const [search, setSearch] = useState(undefined);
 
     const sortedTracks = getSortedTracks(sortBy);
+    const filteredSortedTracks = sortedTracks.filter(
+        (track) => !search || track.title.toLowerCase().includes(search.toLowerCase())
+    )
 
     return (
         <>
@@ -19,20 +22,14 @@ export default function SongList() {
 
 
             <div className="grid grid-cols-4 gap-6">
-                {sortedTracks
-                    .filter(
-                        (track) =>
-                            !search ||
-                            track.title.toLowerCase().includes(search.toLowerCase())
-                    )
-                    .map((track) => {
-                        return (
-                            <Song
-                                key={track.title}
-                                title={track.title}
-                            />
-                        );
-                    })}
+                {filteredSortedTracks.map((track) => {
+                    return (
+                        <Song
+                            key={track.title}
+                            title={track.title}
+                        />
+                    );
+                })}
             </div>
         </>
     );
