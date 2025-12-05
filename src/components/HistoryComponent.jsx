@@ -1,5 +1,10 @@
-export default function HistoryComponent({ img, title, album }) {
-    const imgUrl = `/covers/${img}.webp`;
+import {getMeta} from "../utils/songMeta.js";
+
+export default function HistoryComponent({ title }) {
+
+    const meta = getMeta(title);
+    const album = meta.album;
+    const imgUrl  = meta.imgUrl;
 
   return (
     <div className="flex items-center gap-3">

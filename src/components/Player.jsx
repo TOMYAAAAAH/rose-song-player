@@ -1,26 +1,18 @@
 import {useRef, useContext, useState, useEffect} from "react";
 import {SongContext} from "../contexts/songContext.jsx";
-import {albums} from "../data/albums.js";
-import {tracks} from "../data/tracks.js";
 import PlayerControl from "./PlayerControl.jsx";
 import PlayerVolume from "./PlayerVolume.jsx";
 import PlayerCurrentSong from "./PlayerCurrentSong.jsx";
+import {getAudioUrl} from "../utils/songMeta.js";
 
 
 export default function Player() {
     const {songTitle} = useContext(SongContext);
-    let currentTrack;
-    let currentAlbum;
-    let imgUrl = '/covers/undefined.svg'
     let audioUrl;
-
 
     // Update current track, album, and file URLs based on the selected song
     if (songTitle) {
-        currentTrack = tracks.find((track) => track.title === songTitle) || {title: "", album: ""};
-        currentAlbum = albums.find((album) => album.name === currentTrack.album) || null;
-        imgUrl = `/covers/${currentAlbum.img}.webp`;
-        audioUrl = new URL(`../assets/audios/${currentTrack.audio}`, import.meta.url).href;
+        audioUrl = new URL(getAudioUrl(songTitle), import.meta.url).href;
     }
 
     // References and player state management
@@ -30,9 +22,6 @@ export default function Player() {
     const [duration, setDuration] = useState(0);
     const [volume, setVolume] = useState(0.5);
     const [isMuted, setIsMuted] = useState(false);
-
-
-
 
     // Handle song changes
     useEffect(() => {
@@ -71,8 +60,6 @@ export default function Player() {
         setCurrentTime(time);
     };
 
-
-
     const changeVolume = (e) => {
         const vol = Number(e.target.value);
         setVolume(vol);
@@ -92,15 +79,12 @@ export default function Player() {
 
     return (<div className="bg-white/50 backdrop-blur-2xl sticky p-5 bottom-0 flex items-center justify-between">
 
-        {/* ----------- CURRENT SONG DISPLAY ----------- */}
-        <PlayerCurrentSong imgUrl={imgUrl} currentTrack={currentTrack} currentAlbum={currentAlbum} />
-        {/* ----------- PLAY PAUSE AND TIME CONTROLS ----------- */}
+        <PlayerCurrentSong songTitle={songTitle} />
+
         <PlayerControl audioRef={audioRef} setIsPlaying={setIsPlaying} isPlaying={isPlaying} songTitle={songTitle} duration={duration} currentTime={currentTime} changeTime={changeTime} />
 
-        {/* ----------- VOLUME CONTROLS ----------- */}
         <PlayerVolume isMuted={isMuted} changeVolume={changeVolume} volume={volume} toggleMute={toggleMute} />
 
-        {/* ----------- AUDIO TAG (NOT DISPLAYED) ----------- */}
         <audio
             ref={audioRef}
             src={audioUrl}
