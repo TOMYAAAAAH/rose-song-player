@@ -27,7 +27,7 @@ export function getDate(albumName){
 
 export function getAudioUrl(songTitle) {
     const currentTrack = tracks.find((track) => track.title === songTitle);
-    const audioUrl = `../assets/audios/${currentTrack.audio}`;
+    const audioUrl = `../audios/${currentTrack.audio}`;
     return audioUrl
 }
 

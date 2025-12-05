@@ -12,7 +12,7 @@ export default function Player() {
 
     // Update current track, album, and file URLs based on the selected song
     if (songTitle) {
-        audioUrl = new URL(getAudioUrl(songTitle), import.meta.url).href;
+        audioUrl = getAudioUrl(songTitle);
     }
 
     // References and player state management
