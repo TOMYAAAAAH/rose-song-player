@@ -1,6 +1,6 @@
 # Rose Song Player
 
-Un lecteur de musique dédié à Rose.
+Un lecteur de musique dédié à Rose. Conçu en React
 
 ## Fonctionnalités
 - Parcourir les sons
