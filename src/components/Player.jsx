@@ -2,7 +2,9 @@ import {useRef, useContext, useState, useEffect} from "react";
 import {SongContext} from "../contexts/songContext.jsx";
 import {albums} from "../data/albums.js";
 import {tracks} from "../data/tracks.js";
-import {PlayIcon, PauseIcon, SpeakerXMarkIcon, SpeakerWaveIcon} from "@heroicons/react/24/solid";
+import PlayerControl from "./PlayerControl.jsx";
+import PlayerVolume from "./PlayerVolume.jsx";
+import PlayerCurrentSong from "./PlayerCurrentSong.jsx";
 
 
 export default function Player() {
@@ -12,7 +14,6 @@ export default function Player() {
     let imgUrl = '/covers/undefined.svg'
     let audioUrl;
 
-    const sliderColors = ["#00000060", "#00000018"]
 
     // Update current track, album, and file URLs based on the selected song
     if (songTitle) {
@@ -30,15 +31,7 @@ export default function Player() {
     const [volume, setVolume] = useState(0.5);
     const [isMuted, setIsMuted] = useState(false);
 
-    // Play and Pause functions
-    const play = () => {
-        audioRef.current.play();
-        setIsPlaying(true); // Update state to playing
-    };
-    const pause = () => {
-        audioRef.current.pause();
-        setIsPlaying(false); // Update state to paused
-    };
+
 
 
     // Handle song changes
@@ -78,14 +71,7 @@ export default function Player() {
         setCurrentTime(time);
     };
 
-    const formatTime = (t) => {
-        if (!t) return "0:00";
-        const m = Math.floor(t / 60);
-        const s = Math.floor(t % 60)
-            .toString()
-            .padStart(2, "0");
-        return `${m}:${s}`;
-    };
+
 
     const changeVolume = (e) => {
         const vol = Number(e.target.value);
@@ -107,69 +93,12 @@ export default function Player() {
     return (<div className="bg-white/50 backdrop-blur-2xl sticky p-5 bottom-0 flex items-center justify-between">
 
         {/* ----------- CURRENT SONG DISPLAY ----------- */}
-        <div className="flex items-center gap-4 grow w-[6vw] ">
-
-            <img src={imgUrl} alt={currentTrack ? currentTrack.title : ""} className="rounded-md w-16"/>
-            <div className="flex flex-col">
-                <p className="text-xl font-bold">{currentTrack ? currentTrack.title : ""}</p>
-                <p>{currentAlbum ? currentAlbum?.name : ""}</p>
-            </div>
-        </div>
-
+        <PlayerCurrentSong imgUrl={imgUrl} currentTrack={currentTrack} currentAlbum={currentAlbum} />
         {/* ----------- PLAY PAUSE AND TIME CONTROLS ----------- */}
-        <div className={`flex items-center justify-center gap-4 grow ${!songTitle && "hidden"} `} >
-            {isPlaying ? (<PauseIcon onClick={pause} className="w-12 h-12 text-black cursor-pointer"/>) : (
-                <PlayIcon onClick={play} className="w-12 h-12 text-black cursor-pointer"/>)}
-
-
-            <div className="flex items-center gap-4">
-
-            <span className="text-right text-sm">
-              {formatTime(currentTime)}
-            </span>
-
-                <input
-                    type="range"
-                    min="0"
-                    max={duration}
-                    value={currentTime}
-                    onChange={changeTime}
-                    step="1"
-                    className="w-[20vw] appearance-none hover:h-4 transition-all h-2 rounded-lg cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-gray-400"
-                    style={{
-                        accentColor: "none",
-                        background: `linear-gradient(to right, ${sliderColors[0]} ${(currentTime / duration) * 100}%, ${sliderColors[1]} ${(currentTime / duration) * 100}%)`
-                    }}
-
-                />
-
-                <span className="text-sm">
-         {formatTime(duration)}
-            </span>
-            </div>
-        </div>
+        <PlayerControl audioRef={audioRef} setIsPlaying={setIsPlaying} isPlaying={isPlaying} songTitle={songTitle} duration={duration} currentTime={currentTime} changeTime={changeTime} />
 
         {/* ----------- VOLUME CONTROLS ----------- */}
-        <div className="flex items-center gap-4 grow justify-end w-[6vw]">
-            {isMuted ? (<SpeakerXMarkIcon onClick={toggleMute} className="w-6 h-6"/>) : (
-                <SpeakerWaveIcon onClick={toggleMute} className="w-6 h-6"/>)}
-
-            {/* Volume Input (Seek Bar) */}
-            <input
-                type="range"
-                min="0"
-                max="1"
-                step="0.02"
-                value={isMuted ? 0 : volume}
-                onChange={changeVolume}
-                className="appearance-none h-2 hover:h-4 transition-all rounded-lg cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-gray-400"
-                style={{
-                    accentColor: "transparent",
-                    background: `linear-gradient(to right, ${sliderColors[0]} ${volume * 100}%, ${sliderColors[1]} ${volume * 100}%)`
-                }}
-
-            />
-        </div>
+        <PlayerVolume isMuted={isMuted} changeVolume={changeVolume} volume={volume} toggleMute={toggleMute} />
 
         {/* ----------- AUDIO TAG (NOT DISPLAYED) ----------- */}
         <audio
