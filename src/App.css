@@ -14,7 +14,11 @@
 body {
     background: #dde1dc;
     background: linear-gradient(10deg, #faeeef, #dde1dc);
+}
 
+::selection {
+    background-color: #ff69b4; /* highlight color */
+    color: white;              /* text color */
 }
 
 /* ===== Hide range input thumb (all <input type="range"> globally) ===== */
